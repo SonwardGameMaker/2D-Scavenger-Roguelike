@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _gridManager.Init();
-        _cameraManager.Init(_gridManager.LogicalGrid);
+        _cameraManager.Init(_gridManager);
 
         _characterManager.Init(_gridManager);
         _worldObjectsManager.Init(_gridManager);

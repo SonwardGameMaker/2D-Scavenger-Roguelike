@@ -4,15 +4,19 @@ public class LogicalGrid : MonoBehaviour
 {
     private int _width;
     private int _height;
-    private float _tileSize = 1;
+    private float _tileSize;
+
+    private Vector3 _gridPosition;
 
     private Node[,] _grid;
     
-    public void Init(int width, int height, float tileSize)
+    public void Init(IGridInfo gridInfo)
     {
-        _width = width;
-        _height = height;
-        _tileSize = tileSize;
+        _width = gridInfo.Width;
+        _height = gridInfo.Height;
+        _tileSize = gridInfo.TileSize;
+
+        _gridPosition = gridInfo.GridPosition;
 
         _grid = new Node[_width, _height];
 
@@ -32,7 +36,11 @@ public class LogicalGrid : MonoBehaviour
     // Public Methods
     public Node GetGridNode(Vector2Int coordinates)
     {
-        if (!ValidateWorldPosition(coordinates)) throw new System.Exception("OutOfGrid");
+        if (!ValidateWorldPosition(coordinates))
+        {
+            Debug.LogError("OutOfGrid");
+            return null;
+        }
 
         return _grid[coordinates.x, coordinates.y];
     }

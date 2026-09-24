@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
 {
     [SerializeField] private int _width;
     [SerializeField] private int _height;
@@ -11,12 +11,15 @@ public class GridManager : MonoBehaviour
 
     public void Init()
     {
-        _logicalGrid.Init(_width, _height, _tileSize);
-        _visualGrid.Init(_logicalGrid);
+        _logicalGrid.Init(this);
+        _visualGrid.Init(this);
     }
 
-    public LogicalGrid LogicalGrid { get { return _logicalGrid; } }
-    public VisualGrid VisualGrid { get { return _visualGrid; } }
+    public int Width { get { return _width; } }
+    public int Height { get { return _height; } }
+    public float TileSize { get { return _tileSize; } }
+
+    public Vector3 GridPosition { get { return transform.position; } }
 
     // Public methods
     public void SetObjectInNode(GameObject gameObject, Vector2Int nodeCoord)
@@ -34,5 +37,15 @@ public class GridManager : MonoBehaviour
     public bool TryGetRandomEmptyNode(out Node node)
     {
         return _logicalGrid.TryGetRandomEmptyNode(out node);
+    }
+
+    /// <summary>
+    /// Цей метод має повертати Object з Node по вказаним координатам
+    /// </summary>
+    /// <param name="nodeCoordinates"></param>
+    /// <returns></returns>
+    public GameObject GetNodeObject(Vector2Int nodeCoordinates)
+    {
+        return null; // TODO
     }
 }

@@ -30,10 +30,10 @@ public class CharacterManager : MonoBehaviour
         gridManager.SetObjectInNode(_player.gameObject, _playerStartPosition);
     }
 
-    private void SpawnEnemy(GridManager gridManager) // тут потім зроблю через інтерфейс, тіпа GridManager буде реалізовувати інтерфейс суто під цей функціонал
+    private void SpawnEnemy(IGridNodeInteractions gridNodeActions) // тут потім зроблю через інтерфейс, тіпа GridManager буде реалізовувати інтерфейс суто під цей функціонал
     {
         Node node = null;
-        if (!gridManager.TryGetRandomEmptyNode(out node))
+        if (!gridNodeActions.TryGetRandomEmptyNode(out node))
         {
             Debug.LogError("Not found empty nodes");
             return;
@@ -41,6 +41,6 @@ public class CharacterManager : MonoBehaviour
 
         Enemy enemy = _enemyContainer.SpawnEnemy();
 
-        gridManager.SetObjectInNode(enemy.gameObject, node);
+        gridNodeActions.SetObjectInNode(enemy.gameObject, node);
     }
 }
