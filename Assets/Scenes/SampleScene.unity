@@ -1121,6 +1121,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31c9dfca5126f04095482e34a48c30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VisualGrid
+  _groundSprites:
+  - {fileID: -1216905495, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  - {fileID: -1753996447, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  - {fileID: -1829616545, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  - {fileID: -1581187448, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  - {fileID: -1066576654, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  - {fileID: -2030193462, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  - {fileID: 1730744585, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  - {fileID: -1240449160, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  _borderSprites:
+  - {fileID: 2023391072, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  - {fileID: 611719864, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  - {fileID: -49774134, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  _debug: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
