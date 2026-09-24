@@ -28,6 +28,12 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     }
     public void SetObjectInNode(GameObject gameObject, Node node)
     {
+        if (!node.IsEmpty)
+        {
+            Debug.LogError("Node already occupied");
+            return;
+        }
+
         node.Object = gameObject;
 
         Vector2 worldCoord = GridToWorldInteraction.GridToWorldPosition(_logicalGrid, new Vector2Int(node.X, node.Y));
