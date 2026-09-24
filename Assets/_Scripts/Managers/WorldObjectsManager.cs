@@ -37,7 +37,6 @@ public class WorldObjectsManager : MonoBehaviour
             Debug.LogError("Not found empty nodes");
             return;
         }
-        if (!gridManager.TryGetRandomEmptyNode(out node)) throw new System.Exception("Not found empty nodes");
 
         GameObject worldObject = _worldObjectContainer.SpawnObject(objectType);
 
