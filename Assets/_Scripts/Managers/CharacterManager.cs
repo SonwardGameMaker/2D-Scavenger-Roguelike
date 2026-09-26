@@ -32,8 +32,8 @@ public class CharacterManager : MonoBehaviour
 
     private void SpawnEnemy(IGridNodeInteractions gridNodeActions) // тут потім зроблю через інтерфейс, тіпа GridManager буде реалізовувати інтерфейс суто під цей функціонал
     {
-        Node node = null;
-        if (!gridNodeActions.TryGetRandomEmptyNode(out node))
+        Vector2Int coordinates;
+        if (!gridNodeActions.TryGetRandomEmptyNodeCoordinates(out coordinates))
         {
             Debug.LogError("Not found empty nodes");
             return;
@@ -41,6 +41,6 @@ public class CharacterManager : MonoBehaviour
 
         Enemy enemy = _enemyContainer.SpawnEnemy();
 
-        gridNodeActions.SetObjectInNode(enemy.gameObject, node);
+        gridNodeActions.SetObjectInNode(enemy.gameObject, coordinates);
     }
 }

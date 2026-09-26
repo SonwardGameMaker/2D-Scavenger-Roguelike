@@ -24,10 +24,8 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     // Public methods
     public void SetObjectInNode(GameObject gameObject, Vector2Int nodeCoord)
     {
-        SetObjectInNode(gameObject, _logicalGrid.GetGridNode(nodeCoord));
-    }
-    public void SetObjectInNode(GameObject gameObject, Node node)
-    {
+        Node node = _logicalGrid.GetGridNode(nodeCoord);
+
         if (!node.IsEmpty)
         {
             Debug.LogError("Node already occupied");
@@ -40,9 +38,12 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
         gameObject.transform.position = new Vector3(worldCoord.x, worldCoord.y, gameObject.transform.position.z);
     }
 
-    public bool TryGetRandomEmptyNode(out Node node)
+    public bool TryGetRandomEmptyNodeCoordinates(out Vector2Int coordinates)
     {
-        return _logicalGrid.TryGetRandomEmptyNode(out node);
+        Node node = null;
+        bool result = TryGetRandomEmptyNode(out node);
+        coordinates = new Vector2Int(node.X, node.Y);
+        return result;
     }
 
     /// <summary>
@@ -50,8 +51,14 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     /// </summary>
     /// <param name="nodeCoordinates"></param>
     /// <returns></returns>
-    public GameObject GetNodeObject(Vector2Int nodeCoordinates)
+    public GameObject GetObjectInNode(Vector2Int nodeCoordinates)
     {
         return null; // TODO
+    }
+
+    // Private Methods
+    private bool TryGetRandomEmptyNode(out Node node)
+    {
+        return _logicalGrid.TryGetRandomEmptyNode(out node);
     }
 }

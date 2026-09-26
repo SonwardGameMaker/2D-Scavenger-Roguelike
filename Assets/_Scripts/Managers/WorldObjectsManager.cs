@@ -31,8 +31,8 @@ public class WorldObjectsManager : MonoBehaviour
 
     private void SpawnWorldObject(WorldObjectType objectType, IGridNodeInteractions gridNodeActions) // тут потім зроблю через інтерфейс, тіпа GridManager буде реалізовувати інтерфейс суто під цей функціонал
     {
-        Node node = null;
-        if (!gridNodeActions.TryGetRandomEmptyNode(out node))
+        Vector2Int coordinates;
+        if (!gridNodeActions.TryGetRandomEmptyNodeCoordinates(out coordinates))
         {
             Debug.LogError("Not found empty nodes");
             return;
@@ -40,6 +40,6 @@ public class WorldObjectsManager : MonoBehaviour
 
         GameObject worldObject = _worldObjectContainer.SpawnObject(objectType);
 
-        gridNodeActions.SetObjectInNode(worldObject, node);
+        gridNodeActions.SetObjectInNode(worldObject, coordinates);
     }
 }
