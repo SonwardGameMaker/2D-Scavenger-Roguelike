@@ -22,22 +22,24 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     public Vector3 GridPosition { get { return transform.position; } }
 
     // Public methods
-    public void SetObjectInNode(GameObject gameObject, Vector2Int nodeCoord)
+    public bool TrySetObjectInNode(GameObject gameObject, Vector2Int nodeCoord)
     {
-        SetObjectInNode(gameObject, _logicalGrid.GetGridNode(nodeCoord));
+        return TrySetObjectInNode(gameObject, _logicalGrid.GetGridNode(nodeCoord));
     }
-    public void SetObjectInNode(GameObject gameObject, Node node)
+    public bool TrySetObjectInNode(GameObject gameObject, Node node)
     {
         if (!node.IsEmpty)
         {
-            Debug.LogError("Node already occupied");
-            return;
+            Debug.LogError("Node already occupied"); // оце можна потім взагалі десь інде винести
+            return false;
         }
 
         node.Object = gameObject;
 
         Vector2 worldCoord = GridToWorldInteraction.GridToWorldPosition(_logicalGrid, new Vector2Int(node.X, node.Y));
         gameObject.transform.position = new Vector3(worldCoord.x, worldCoord.y, gameObject.transform.position.z);
+    
+        return true;
     }
 
     public bool TryGetRandomEmptyNode(out Node node)

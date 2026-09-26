@@ -27,7 +27,7 @@ public class CharacterManager : MonoBehaviour
     // Private methods
     private void SetPlayerIntoGrid(GridManager gridManager)
     {
-        gridManager.SetObjectInNode(_player.gameObject, _playerStartPosition);
+        gridManager.TrySetObjectInNode(_player.gameObject, _playerStartPosition);
     }
 
     private void SpawnEnemy(IGridNodeInteractions gridNodeActions) // тут потім зроблю через інтерфейс, тіпа GridManager буде реалізовувати інтерфейс суто під цей функціонал
@@ -41,6 +41,6 @@ public class CharacterManager : MonoBehaviour
 
         Enemy enemy = _enemyContainer.SpawnEnemy();
 
-        gridNodeActions.SetObjectInNode(enemy.gameObject, node);
+        gridNodeActions.TrySetObjectInNode(enemy.gameObject, node);
     }
 }

@@ -26,7 +26,7 @@ public class WorldObjectsManager : MonoBehaviour
     // Private methods
     private void SetExitIntoGrid(GridManager gridManager)
     {
-        gridManager.SetObjectInNode(_exit.gameObject, _exitPosition);
+        gridManager.TrySetObjectInNode(_exit.gameObject, _exitPosition);
     }
 
     private void SpawnWorldObject(WorldObjectType objectType, IGridNodeInteractions gridNodeActions) // тут потім зроблю через інтерфейс, тіпа GridManager буде реалізовувати інтерфейс суто під цей функціонал
