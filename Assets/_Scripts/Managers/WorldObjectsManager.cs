@@ -40,6 +40,6 @@ public class WorldObjectsManager : MonoBehaviour
 
         GameObject worldObject = _worldObjectContainer.SpawnObject(objectType);
 
-        gridNodeActions.SetObjectInNode(worldObject, coordinates);
+        gridNodeActions.TrySetObjectInNode(worldObject, coordinates);
     }
 }
