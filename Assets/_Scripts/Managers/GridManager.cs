@@ -24,13 +24,11 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     // Public methods
     public bool TrySetObjectInNode(GameObject gameObject, Vector2Int nodeCoord)
     {
-        return TrySetObjectInNode(gameObject, _logicalGrid.GetGridNode(nodeCoord));
-    }
-    public bool TrySetObjectInNode(GameObject gameObject, Node node)
-    {
+        Node node = _logicalGrid.GetGridNode(nodeCoord);
+
         if (!node.IsEmpty)
         {
-            Debug.LogError("Node already occupied"); // оце можна потім взагалі десь інде винести
+            Debug.LogError("Node already occupied"); // Г®Г¶ГҐ Г¬Г®Г¦Г­Г  ГЇГ®ГІВіГ¬ ГўГ§Г ГЈГ Г«Ві Г¤ГҐГ±Гј ВіГ­Г¤ГҐ ГўГЁГ­ГҐГ±ГІГЁ
             return false;
         }
 
@@ -42,18 +40,27 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
         return true;
     }
 
-    public bool TryGetRandomEmptyNode(out Node node)
+    public bool TryGetRandomEmptyNodeCoordinates(out Vector2Int coordinates)
     {
-        return _logicalGrid.TryGetRandomEmptyNode(out node);
+        Node node = null;
+        bool result = TryGetRandomEmptyNode(out node);
+        coordinates = new Vector2Int(node.X, node.Y);
+        return result;
     }
 
     /// <summary>
-    /// Цей метод має повертати Object з Node по вказаним координатам
+    /// Г–ГҐГ© Г¬ГҐГІГ®Г¤ Г¬Г Вє ГЇГ®ГўГҐГ°ГІГ ГІГЁ Object Г§ Node ГЇГ® ГўГЄГ Г§Г Г­ГЁГ¬ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ Г¬
     /// </summary>
     /// <param name="nodeCoordinates"></param>
     /// <returns></returns>
-    public GameObject GetNodeObject(Vector2Int nodeCoordinates)
+    public GameObject GetObjectInNode(Vector2Int nodeCoordinates)
     {
         return null; // TODO
+    }
+
+    // Private Methods
+    private bool TryGetRandomEmptyNode(out Node node)
+    {
+        return _logicalGrid.TryGetRandomEmptyNode(out node);
     }
 }

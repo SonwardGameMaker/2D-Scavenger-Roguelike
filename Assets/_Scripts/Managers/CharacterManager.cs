@@ -16,7 +16,7 @@ public class CharacterManager : MonoBehaviour
     public Player Player { get { return _player; } }
 
     // Public methods
-    public void SpawnEnemies(int enemyCount, GridManager gridManager) // отут може потім як транзакцію зроблю
+    public void SpawnEnemies(int enemyCount, GridManager gridManager) // Г®ГІГіГІ Г¬Г®Г¦ГҐ ГЇГ®ГІВіГ¬ ГїГЄ ГІГ°Г Г­Г§Г ГЄГ¶ВіГѕ Г§Г°Г®ГЎГ«Гѕ
     {
         for (int i = 0; i < enemyCount; i++)
         {
@@ -30,10 +30,10 @@ public class CharacterManager : MonoBehaviour
         gridManager.TrySetObjectInNode(_player.gameObject, _playerStartPosition);
     }
 
-    private void SpawnEnemy(IGridNodeInteractions gridNodeActions) // тут потім зроблю через інтерфейс, тіпа GridManager буде реалізовувати інтерфейс суто під цей функціонал
+    private void SpawnEnemy(IGridNodeInteractions gridNodeActions) // ГІГіГІ ГЇГ®ГІВіГ¬ Г§Г°Г®ГЎГ«Гѕ Г·ГҐГ°ГҐГ§ ВіГ­ГІГҐГ°ГґГҐГ©Г±, ГІВіГЇГ  GridManager ГЎГіГ¤ГҐ Г°ГҐГ Г«ВіГ§Г®ГўГіГўГ ГІГЁ ВіГ­ГІГҐГ°ГґГҐГ©Г± Г±ГіГІГ® ГЇВіГ¤ Г¶ГҐГ© ГґГіГ­ГЄГ¶ВіГ®Г­Г Г«
     {
-        Node node = null;
-        if (!gridNodeActions.TryGetRandomEmptyNode(out node))
+        Vector2Int coordinates;
+        if (!gridNodeActions.TryGetRandomEmptyNodeCoordinates(out coordinates))
         {
             Debug.LogError("Not found empty nodes");
             return;
@@ -41,6 +41,6 @@ public class CharacterManager : MonoBehaviour
 
         Enemy enemy = _enemyContainer.SpawnEnemy();
 
-        gridNodeActions.TrySetObjectInNode(enemy.gameObject, node);
+        gridNodeActions.TrySetObjectInNode(enemy.gameObject, coordinates);
     }
 }
