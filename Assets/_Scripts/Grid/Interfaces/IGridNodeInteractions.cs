@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IGridNodeInteractions
 {
-    public void SetObjectInNode(GameObject gameObject, Vector2Int nodeCoord);
+    public bool TrySetObjectInNode(GameObject gameObject, Vector2Int nodeCoord);
 
     public GameObject GetObjectInNode(Vector2Int nodeCoordinaets);
 

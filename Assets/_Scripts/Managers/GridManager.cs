@@ -22,20 +22,22 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     public Vector3 GridPosition { get { return transform.position; } }
 
     // Public methods
-    public void SetObjectInNode(GameObject gameObject, Vector2Int nodeCoord)
+    public bool TrySetObjectInNode(GameObject gameObject, Vector2Int nodeCoord)
     {
         Node node = _logicalGrid.GetGridNode(nodeCoord);
 
         if (!node.IsEmpty)
         {
-            Debug.LogError("Node already occupied");
-            return;
+            Debug.LogError("Node already occupied"); // Г®Г¶ГҐ Г¬Г®Г¦Г­Г  ГЇГ®ГІВіГ¬ ГўГ§Г ГЈГ Г«Ві Г¤ГҐГ±Гј ВіГ­Г¤ГҐ ГўГЁГ­ГҐГ±ГІГЁ
+            return false;
         }
 
         node.Object = gameObject;
 
         Vector2 worldCoord = GridToWorldInteraction.GridToWorldPosition(_logicalGrid, new Vector2Int(node.X, node.Y));
         gameObject.transform.position = new Vector3(worldCoord.x, worldCoord.y, gameObject.transform.position.z);
+    
+        return true;
     }
 
     public bool TryGetRandomEmptyNodeCoordinates(out Vector2Int coordinates)
@@ -47,7 +49,7 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     }
 
     /// <summary>
-    /// Цей метод має повертати Object з Node по вказаним координатам
+    /// Г–ГҐГ© Г¬ГҐГІГ®Г¤ Г¬Г Вє ГЇГ®ГўГҐГ°ГІГ ГІГЁ Object Г§ Node ГЇГ® ГўГЄГ Г§Г Г­ГЁГ¬ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ Г¬
     /// </summary>
     /// <param name="nodeCoordinates"></param>
     /// <returns></returns>
