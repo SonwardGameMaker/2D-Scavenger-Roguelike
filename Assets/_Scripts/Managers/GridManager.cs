@@ -26,9 +26,14 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     {
         Node node = _logicalGrid.GetGridNode(nodeCoord);
 
+        if (node == null)
+        {
+            Debug.LogError("Node is missing");
+            return false;
+        }
         if (!node.IsEmpty)
         {
-            Debug.LogError("Node already occupied"); // îöå ìîæíà ïîò³ì âçàãàë³ äåñü ³íäå âèíåñòè
+            Debug.LogError("Node already occupied");
             return false;
         }
 
@@ -48,14 +53,9 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
         return result;
     }
 
-    /// <summary>
-    /// Öåé ìåòîä ìàº ïîâåðòàòè Object ç Node ïî âêàçàíèì êîîðäèíàòàì
-    /// </summary>
-    /// <param name="nodeCoordinates"></param>
-    /// <returns></returns>
     public GameObject GetObjectInNode(Vector2Int nodeCoordinates)
     {
-        return null; // TODO
+        return _logicalGrid.GetGridNode(nodeCoordinates).Object;
     }
 
     // Private Methods
