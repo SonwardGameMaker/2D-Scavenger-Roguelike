@@ -7,32 +7,32 @@ public class WorldObjectsManager : MonoBehaviour
 
     [SerializeField] WorldObjectContainer _worldObjectContainer;
 
-    public void Init(GridManager gridManager)
+    public void Init(IGridNodeInteractions gridInteractor)
     {
-        SetExitIntoGrid(gridManager);
+        SetExitIntoGrid(gridInteractor);
     }
 
     public Exit Exit { get { return _exit; } }
 
     // Public methods
-    public void SpawnWorldObjects(WorldObjectType objectType, int objectCount, GridManager gridManager) // отут може потім як транзакцію зроблю
+    public void SpawnWorldObjects(WorldObjectType objectType, int objectCount, IGridNodeInteractions gridInteractor) // отут може потім як транзакцію зроблю
     {
         for (int i = 0; i < objectCount; i++)
         {
-            SpawnWorldObject(objectType, gridManager);
+            SpawnWorldObject(objectType, gridInteractor);
         }
     }
 
     // Private methods
-    private void SetExitIntoGrid(GridManager gridManager)
+    private void SetExitIntoGrid(IGridNodeInteractions gridInteractor)
     {
-        gridManager.TrySetObjectInNode(_exit.gameObject, _exitPosition);
+        gridInteractor.TrySetObjectInNode(_exit.gameObject, _exitPosition);
     }
 
-    private void SpawnWorldObject(WorldObjectType objectType, IGridNodeInteractions gridNodeActions) // тут потім зроблю через інтерфейс, тіпа GridManager буде реалізовувати інтерфейс суто під цей функціонал
+    private void SpawnWorldObject(WorldObjectType objectType, IGridNodeInteractions gridInteractor)
     {
         Vector2Int coordinates;
-        if (!gridNodeActions.TryGetRandomEmptyNodeCoordinates(out coordinates))
+        if (!gridInteractor.TryGetRandomEmptyNodeCoordinates(out coordinates))
         {
             Debug.LogError("Not found empty nodes");
             return;
@@ -40,6 +40,6 @@ public class WorldObjectsManager : MonoBehaviour
 
         GameObject worldObject = _worldObjectContainer.SpawnObject(objectType);
 
-        gridNodeActions.TrySetObjectInNode(worldObject, coordinates);
+        gridInteractor.TrySetObjectInNode(worldObject, coordinates);
     }
 }

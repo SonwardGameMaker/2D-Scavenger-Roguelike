@@ -1,22 +1,21 @@
 using UnityEngine;
 
-// тут подивлюс€, €кщо мен≥ треба буде реально р≥зн≥ с≥тки, тод≥ зроблю базовий клас дл€ с≥тки ≥ буду його сюди запихати. якщо н≥, тод≥ видалю в≥зуальну с≥тку
 public static class GridToWorldInteraction
 {
-    public static Vector2Int WorldToGridPosition(LogicalGrid grid, Vector3 worldPosition)
+    public static Vector2Int WorldToGridPosition(IGridInfo gridInfo, Vector3 worldPosition)
     {
-        Vector3 relativePosition = worldPosition - grid.transform.position;
+        Vector3 relativePosition = worldPosition - gridInfo.GridPosition;
 
-        int x = Mathf.FloorToInt(relativePosition.x / grid.TileSize);
-        int y = Mathf.FloorToInt(relativePosition.y / grid.TileSize);
+        int x = Mathf.FloorToInt(relativePosition.x / gridInfo.TileSize);
+        int y = Mathf.FloorToInt(relativePosition.y / gridInfo.TileSize);
 
         return new Vector2Int(x, y);
     }
 
-    public static Vector2 GridToWorldPosition(LogicalGrid grid, Vector2Int gridPosition)
+    public static Vector2 GridToWorldPosition(IGridInfo gridInfo, Vector2Int gridPosition)
     {
-        float x = grid.transform.position.x + (gridPosition.x * grid.TileSize) + grid.TileSize / 2;
-        float y = grid.transform.position.y + (gridPosition.y * grid.TileSize) + grid.TileSize / 2;
+        float x = gridInfo.GridPosition.x + (gridPosition.x * gridInfo.TileSize) + gridInfo.TileSize / 2;
+        float y = gridInfo.GridPosition.y + (gridPosition.y * gridInfo.TileSize) + gridInfo.TileSize / 2;
 
         return new Vector2(x, y);
     }

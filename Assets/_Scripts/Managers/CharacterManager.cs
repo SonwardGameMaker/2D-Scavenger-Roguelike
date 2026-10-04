@@ -8,32 +8,32 @@ public class CharacterManager : MonoBehaviour
 
     [SerializeField] private EnemyContainer _enemyContainer;
 
-    public void Init(GridManager gridManager)
+    public void Init(IGridNodeInteractions gridInteractor)
     {
-        SetPlayerIntoGrid(gridManager);
+        SetPlayerIntoGrid(gridInteractor);
     }
 
     public Player Player { get { return _player; } }
 
     // Public methods
-    public void SpawnEnemies(int enemyCount, GridManager gridManager) // îòóò ìîæå ïîò³ì ÿê òðàíçàêö³þ çðîáëþ
+    public void SpawnEnemies(int enemyCount, IGridNodeInteractions gridInteractor)
     {
         for (int i = 0; i < enemyCount; i++)
         {
-            SpawnEnemy(gridManager);
+            SpawnEnemy(gridInteractor);
         }
     }
 
     // Private methods
-    private void SetPlayerIntoGrid(GridManager gridManager)
+    private void SetPlayerIntoGrid(IGridNodeInteractions gridInteractor)
     {
-        gridManager.TrySetObjectInNode(_player.gameObject, _playerStartPosition);
+        gridInteractor.TrySetObjectInNode(_player.gameObject, _playerStartPosition);
     }
 
-    private void SpawnEnemy(IGridNodeInteractions gridNodeActions) // òóò ïîò³ì çðîáëþ ÷åðåç ³íòåðôåéñ, ò³ïà GridManager áóäå ðåàë³çîâóâàòè ³íòåðôåéñ ñóòî ï³ä öåé ôóíêö³îíàë
+    private void SpawnEnemy(IGridNodeInteractions gridInteractor)
     {
         Vector2Int coordinates;
-        if (!gridNodeActions.TryGetRandomEmptyNodeCoordinates(out coordinates))
+        if (!gridInteractor.TryGetRandomEmptyNodeCoordinates(out coordinates))
         {
             Debug.LogError("Not found empty nodes");
             return;
@@ -41,6 +41,6 @@ public class CharacterManager : MonoBehaviour
 
         Enemy enemy = _enemyContainer.SpawnEnemy();
 
-        gridNodeActions.TrySetObjectInNode(enemy.gameObject, coordinates);
+        gridInteractor.TrySetObjectInNode(enemy.gameObject, coordinates);
     }
 }

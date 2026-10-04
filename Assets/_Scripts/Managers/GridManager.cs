@@ -34,7 +34,7 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
 
         node.Object = gameObject;
 
-        Vector2 worldCoord = GridToWorldInteraction.GridToWorldPosition(_logicalGrid, new Vector2Int(node.X, node.Y));
+        Vector2 worldCoord = GridToWorldInteraction.GridToWorldPosition(this, new Vector2Int(node.X, node.Y));
         gameObject.transform.position = new Vector3(worldCoord.x, worldCoord.y, gameObject.transform.position.z);
     
         return true;

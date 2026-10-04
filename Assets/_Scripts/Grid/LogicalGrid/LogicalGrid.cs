@@ -6,8 +6,6 @@ public class LogicalGrid : MonoBehaviour
     private int _height;
     private float _tileSize;
 
-    private Vector3 _gridPosition;
-
     private Node[,] _grid;
     
     public void Init(IGridInfo gridInfo)
@@ -15,8 +13,6 @@ public class LogicalGrid : MonoBehaviour
         _width = gridInfo.Width;
         _height = gridInfo.Height;
         _tileSize = gridInfo.TileSize;
-
-        _gridPosition = gridInfo.GridPosition;
 
         _grid = new Node[_width, _height];
 
@@ -29,24 +25,16 @@ public class LogicalGrid : MonoBehaviour
         }
     }
 
-    public int Width { get { return _width; } }
-    public int Height { get { return _height; } }
-    public float TileSize { get { return _tileSize; } }
-
     // Public Methods
     public Node GetGridNode(Vector2Int coordinates)
     {
-        if (!ValidateWorldPosition(coordinates))
+        if (!ValidateGridPosition(coordinates))
         {
             Debug.LogError("OutOfGrid");
             return null;
         }
 
         return _grid[coordinates.x, coordinates.y];
-    }
-    public Node GetGridNode(Vector3 worldPosition)
-    {
-        return GetGridNode(GridToWorldInteraction.WorldToGridPosition(this, worldPosition));
     }
 
     public bool TryGetRandomEmptyNode(out Node node)
@@ -76,7 +64,7 @@ public class LogicalGrid : MonoBehaviour
     }
 
     // Private Methods
-    private bool ValidateWorldPosition(Vector2Int coordinates)
+    private bool ValidateGridPosition(Vector2Int coordinates)
     {
         if (
             coordinates.x < 0 ||
