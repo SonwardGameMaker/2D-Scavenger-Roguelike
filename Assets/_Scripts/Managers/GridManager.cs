@@ -55,7 +55,10 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
 
     public GameObject GetObjectInNode(Vector2Int nodeCoordinates)
     {
-        return _logicalGrid.GetGridNode(nodeCoordinates).Object;
+        Node node = _logicalGrid.GetGridNode(nodeCoordinates);
+
+        if (node == null) return null;
+        return node.Object;
     }
 
     // Private Methods
