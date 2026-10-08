@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LogicalGrid : MonoBehaviour
@@ -7,6 +8,8 @@ public class LogicalGrid : MonoBehaviour
     private float _tileSize;
 
     private Node[,] _grid;
+
+    private Dictionary<GameObject, Vector2Int> _nodeObjectsCoordinates;
     
     public void Init(IGridInfo gridInfo)
     {
@@ -23,6 +26,8 @@ public class LogicalGrid : MonoBehaviour
                 _grid[x, y] = new Node(x, y);
             }
         }
+
+        _nodeObjectsCoordinates = new Dictionary<GameObject, Vector2Int>();
     }
 
     // Public Methods
@@ -61,6 +66,42 @@ public class LogicalGrid : MonoBehaviour
         }
 
         return node != null;
+    }
+
+    public bool TrySetObjectInNode(Node node, GameObject go)
+    {
+        if (!node.IsEmpty)
+        {
+            Debug.LogError("Node already occupied");
+            return false;
+        }
+
+        node.Object = go;
+        Vector2Int coordinates = new Vector2Int(node.X, node.Y);
+
+        if (_nodeObjectsCoordinates.ContainsKey(go)) // це думаю може потім винесу в окремий метод AddObject який вже буде забороняти вставлення дублікатів а не просто ігнорувати
+        { 
+            _nodeObjectsCoordinates[go] = coordinates;
+        }
+        else 
+        {
+            _nodeObjectsCoordinates.Add(go, coordinates);
+        }
+
+        return true;
+    }
+
+    public Vector2Int GetObjectCoordinates(GameObject go)
+    {
+        Vector2Int coordinates;
+        _nodeObjectsCoordinates.TryGetValue(go, out coordinates);
+
+        return coordinates;
+    }
+
+    public void RemoveObjectFromGrid(GameObject go)
+    {
+        _nodeObjectsCoordinates.Remove(go);
     }
 
     // Private Methods
