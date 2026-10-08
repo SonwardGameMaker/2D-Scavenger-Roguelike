@@ -1,4 +1,4 @@
 root = true
 
-[*.cs]
+[*.{cs,txt}]
 charset = utf-8-bom
