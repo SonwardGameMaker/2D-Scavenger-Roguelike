@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterManager : MonoBehaviour
+public class CharacterManager : MonoBehaviour, ICharacterContainer // думаю потім зроблю щоб він повертав реалізацію icharactercontainer а не сам нею був
 {
     [SerializeField] private Player _player;
 
@@ -14,6 +15,8 @@ public class CharacterManager : MonoBehaviour
     }
 
     public Player Player { get { return _player; } }
+
+    public List<Enemy> Enemies { get { return null; } } // TODO
 
     // Public methods
     public void SpawnEnemies(int enemyCount, IGridNodeInteractions gridInteractor)
