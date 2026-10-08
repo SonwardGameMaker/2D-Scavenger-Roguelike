@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 
 public class LogicalGrid : MonoBehaviour
@@ -79,7 +79,7 @@ public class LogicalGrid : MonoBehaviour
         node.Object = go;
         Vector2Int coordinates = new Vector2Int(node.X, node.Y);
 
-        if (_nodeObjectsCoordinates.ContainsKey(go)) // це думаю може потім винесу в окремий метод AddObject який вже буде забороняти вставлення дублікатів а не просто ігнорувати
+        if (_nodeObjectsCoordinates.ContainsKey(go)) // С†Рµ РґСѓРјР°СЋ РјРѕР¶Рµ РїРѕС‚С–Рј РІРёРЅРµСЃСѓ РІ РѕРєСЂРµРјРёР№ РјРµС‚РѕРґ AddObject СЏРєРёР№ РІР¶Рµ Р±СѓРґРµ Р·Р°Р±РѕСЂРѕРЅСЏС‚Рё РІСЃС‚Р°РІР»РµРЅРЅСЏ РґСѓР±Р»С–РєР°С‚С–РІ Р° РЅРµ РїСЂРѕСЃС‚Рѕ С–РіРЅРѕСЂСѓРІР°С‚Рё
         { 
             _nodeObjectsCoordinates[go] = coordinates;
         }

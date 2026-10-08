@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterManager : MonoBehaviour, ICharacterContainer // думаю потім зроблю щоб він повертав реалізацію icharactercontainer а не сам нею був
+public class CharacterManager : MonoBehaviour, ICharacterContainer // РґСѓРјР°СЋ РїРѕС‚С–Рј Р·СЂРѕР±Р»СЋ С‰РѕР± РІС–РЅ РїРѕРІРµСЂС‚Р°РІ СЂРµР°Р»С–Р·Р°С†С–СЋ icharactercontainer Р° РЅРµ СЃР°Рј РЅРµСЋ Р±СѓРІ
 {
     [SerializeField] private Player _player;
 

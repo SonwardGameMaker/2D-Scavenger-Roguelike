@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class WorldObjectsManager : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class WorldObjectsManager : MonoBehaviour
     public Exit Exit { get { return _exit; } }
 
     // Public methods
-    public void SpawnWorldObjects(WorldObjectType objectType, int objectCount, IGridNodeInteractions gridInteractor) // отут може потім як транзакцію зроблю
+    public void SpawnWorldObjects(WorldObjectType objectType, int objectCount, IGridNodeInteractions gridInteractor) // РѕС‚СѓС‚ РјРѕР¶Рµ РїРѕС‚С–Рј СЏРє С‚СЂР°РЅР·Р°РєС†С–СЋ Р·СЂРѕР±Р»СЋ
     {
         for (int i = 0; i < objectCount; i++)
         {

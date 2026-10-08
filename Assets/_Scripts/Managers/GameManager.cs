@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CharacterManager _characterManager;
     [SerializeField] private InputManager _inputManager;
     
-    // Сервіси інітяться в Awake
+    // РЎРµСЂРІС–СЃРё С–РЅС–С‚СЏС‚СЊСЃСЏ РІ Awake
     private void Awake()
     {
         _gridManager.Init();
