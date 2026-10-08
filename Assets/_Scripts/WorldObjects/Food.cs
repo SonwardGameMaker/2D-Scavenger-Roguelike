@@ -1,16 +1,11 @@
 using UnityEngine;
 
-public class Food : MonoBehaviour
+public class Food : MonoBehaviour, IInteractable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private int _value;
+    
+    public void Interact(Player player)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
