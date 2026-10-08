@@ -72,7 +72,7 @@ public class LogicalGrid : MonoBehaviour
     {
         if (!node.IsEmpty)
         {
-            Debug.LogError("Node already occupied");
+            Debug.Log("Node already occupied");
             return false;
         }
 

@@ -8,25 +8,34 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WorldObjectsManager _worldObjectsManager;
     [SerializeField] private CharacterManager _characterManager;
     [SerializeField] private InputManager _inputManager;
+    [SerializeField] private BotAiManager _botAiManager;
     
     // Сервіси інітяться в Awake
     private void Awake()
     {
+        // Init
         _gridManager.Init();
         _cameraManager.Init(_gridManager);
 
         _characterManager.Init(_gridManager);
         _worldObjectsManager.Init(_gridManager);
 
-        _turnManager.Init(_gridManager, _characterManager);
+        _turnManager.Init(_gridManager, _characterManager.CharacterContainer);
 
-        _inputManager.Init(_characterManager, _turnManager);
+        _inputManager.Init(_turnManager, _turnManager, _characterManager.CharacterContainer);
+        _botAiManager.Init(_turnManager, _turnManager, _gridManager);
 
+        // Register
+        _turnManager.RegisterPlayerController(_inputManager);
+        _turnManager.RegisterEnemyController(_botAiManager);
 
         // Spawn
         _characterManager.SpawnEnemies(2, _gridManager);
         _worldObjectsManager.SpawnWorldObjects(WorldObjectType.Weed, 3, _gridManager);
         _worldObjectsManager.SpawnWorldObjects(WorldObjectType.Food, 1, _gridManager);
+
+        // Init Turn Order
+        _turnManager.InitTurnOrder();
     }
 
 }

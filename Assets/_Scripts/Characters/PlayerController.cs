@@ -1,17 +1,19 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     private Player _player;
     private ICharacterMoving _characterMoving;
+    private ITurnManager _turnManager;
 
     private Vector2Int _direction;
 
-    public void Init(Player player, ICharacterMoving characterMoving)
+    public void Init(ITurnManager turnManager, Player player, ICharacterMoving characterMoving)
     {
         _player = player;
         _characterMoving = characterMoving;
+        _turnManager = turnManager;
 
         _direction = new Vector2Int();
     }
@@ -23,7 +25,10 @@ public class PlayerController : MonoBehaviour
         Vector2 moveInput = context.ReadValue<Vector2>();
         _direction = new Vector2Int((int)moveInput.x, (int)moveInput.y);
         
-        _characterMoving.TryMoveCharacter(_direction, _player.gameObject);
+        if(_characterMoving.TryMoveCharacter(_direction, _player))
+        {
+            _turnManager.CurrentCharacterEndedTurn(_player);
+        }
 
     }
 }

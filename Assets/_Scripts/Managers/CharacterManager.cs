@@ -1,22 +1,19 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterManager : MonoBehaviour, ICharacterContainer // думаю потім зроблю щоб він повертав реалізацію icharactercontainer а не сам нею був
+public class CharacterManager : MonoBehaviour
 {
     [SerializeField] private Player _player;
-
     [SerializeField] private Vector2Int _playerStartPosition;
-
-    [SerializeField] private EnemyContainer _enemyContainer;
+    [SerializeField] private CharacterContainer _characterContainer;
 
     public void Init(IGridNodeInteractions gridInteractor)
     {
         SetPlayerIntoGrid(gridInteractor);
     }
 
-    public Player Player { get { return _player; } }
-
-    public List<Enemy> Enemies { get { return null; } } // TODO
+    public Player Player { get => _player;  }
+    public ICharacterContainer CharacterContainer { get => _characterContainer;  }
 
     // Public methods
     public void SpawnEnemies(int enemyCount, IGridNodeInteractions gridInteractor)
@@ -42,7 +39,7 @@ public class CharacterManager : MonoBehaviour, ICharacterContainer // думаю
             return;
         }
 
-        Enemy enemy = _enemyContainer.SpawnEnemy();
+        Enemy enemy = _characterContainer.SpawnEnemy();
 
         gridInteractor.TrySetObjectInNode(enemy.gameObject, coordinates);
     }

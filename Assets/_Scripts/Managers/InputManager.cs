@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 
-public class InputManager : MonoBehaviour
+public class InputManager : MonoBehaviour, IPlayerController
 {
     private BaseMovement _inputActions;
 
@@ -10,14 +10,17 @@ public class InputManager : MonoBehaviour
     private Player _player;
     [SerializeField] private PlayerController _playerController;
 
-    public void Init(ICharacterContainer characterContainer, ICharacterMoving characterMoving)
+    public void Init(ITurnManager turnManager, ICharacterMoving characterMoving, ICharacterContainer characterContainer)
     {
         _player = characterContainer.Player;
 
         _characterMoving = characterMoving;
 
-        _playerController.Init(_player, characterMoving);
+        _playerController.Init(turnManager, _player, characterMoving);
     }
 
-
+    public void PlayersTurn()
+    {
+        Debug.Log("Player's turn!");
+    }
 }
