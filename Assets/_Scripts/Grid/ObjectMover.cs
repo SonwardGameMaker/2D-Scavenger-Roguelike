@@ -10,10 +10,12 @@ public class ObjectMover : IGridObjectMoving
         _gridInteractions = gridInteractions;
     }
 
-    public bool TryMoveGridObject(Vector2Int direction, GameObject go)
+    public bool TryMoveGridObject(Vector2Int direction, GameObject go, out GameObject collision)
     {
         Vector2Int oldPosition = _gridInteractions.GetCoordinates(go);
         Vector2Int newPosition = oldPosition + direction;
+
+        collision = _gridInteractions.GetObjectInNode(newPosition);
 
         if (_gridInteractions.TrySetObjectInNode(go, newPosition))
         {
@@ -21,7 +23,10 @@ public class ObjectMover : IGridObjectMoving
 
             return true;
         }
-
-        return false;
+        else
+        {
+            return false;
+        }
+            
     }
 }

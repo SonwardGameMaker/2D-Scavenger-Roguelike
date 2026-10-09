@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class InputManager : MonoBehaviour, IPlayerController
 {
-    private BaseMovement _inputActions;
-
-    private IGridObjectMoving _characterMoving;
-
     private Player _player;
-    [SerializeField] private PlayerController _playerController;
+    private IGridObjectMoving _characterMoving;
+    private ITurnManager _turnManager;
+
+    private Vector2Int _direction;
+    private bool _playersTurn;
 
     public void Init(ITurnManager turnManager, IGridObjectMoving characterMoving, ICharacterContainer characterContainer)
     {
@@ -16,11 +17,39 @@ public class InputManager : MonoBehaviour, IPlayerController
 
         _characterMoving = characterMoving;
 
-        _playerController.Init(turnManager, _player, characterMoving);
+        _turnManager = turnManager;
+        _direction = new Vector2Int();
+        _playersTurn = false;
     }
 
     public void PlayersTurn()
     {
+        _playersTurn = true;
         Debug.Log("Player's turn!");
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        if (!_playersTurn) { return; }
+        if (!context.performed) { return; }
+
+        Vector2 moveInput = context.ReadValue<Vector2>();
+        _direction = new Vector2Int((int)moveInput.x, (int)moveInput.y);
+
+        if (_characterMoving.TryMoveGridObject(_direction, _player.gameObject, out GameObject collision))
+        {
+            EndPlayerTurn();
+        }
+        else if (collision != null && collision.TryGetComponent(out IInteractable interactable))
+        {
+            interactable.Interact(_player);
+            EndPlayerTurn();
+        }
+    }
+
+    private void EndPlayerTurn()
+    {
+        _playersTurn = false;
+        _turnManager.CurrentCharacterEndedTurn(_player);
     }
 }

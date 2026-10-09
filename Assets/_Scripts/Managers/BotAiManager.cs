@@ -39,8 +39,14 @@ public class BotAiManager : MonoBehaviour, IAiController
 
         foreach (Vector2Int direction in directions)
         {
-            if (_characterMoving.TryMoveGridObject(direction, _current.gameObject))
+            if (_characterMoving.TryMoveGridObject(direction, _current.gameObject, out GameObject collision))
             {
+                return true;
+            }
+
+            if (collision != null && collision.TryGetComponent(out Player player))
+            {
+                // TODO: Attack the player
                 return true;
             }
         }

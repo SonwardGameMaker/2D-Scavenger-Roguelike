@@ -129,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 35021859}
   - component: {fileID: 35021860}
-  - component: {fileID: 35021862}
   - component: {fileID: 35021861}
   m_Layer: 0
   m_Name: InputManager
@@ -165,7 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e4fae3566e6564bad58989106d319c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _playerController: {fileID: 35021862}
 --- !u!114 &35021861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,8 +191,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 35021862}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 35021860}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -212,18 +210,6 @@ MonoBehaviour:
   m_DefaultActionMap: Movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &35021862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 35021858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24558891b2d61d64da3f96dbbb84fdb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1 &81987988
 GameObject:
   m_ObjectHideFlags: 0
