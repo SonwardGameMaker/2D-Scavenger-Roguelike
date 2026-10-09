@@ -36,11 +36,11 @@ public class InputManager : MonoBehaviour, IPlayerController
         Vector2 moveInput = context.ReadValue<Vector2>();
         _direction = new Vector2Int((int)moveInput.x, (int)moveInput.y);
 
-        if (_characterMoving.TryMoveGridObject(_direction, _player.gameObject, out GameObject collision))
+        if (_characterMoving.TryMoveGridObject(_direction, _player, out IGridEntity collision))
         {
             EndPlayerTurn();
         }
-        else if (collision != null && collision.TryGetComponent(out IInteractable interactable))
+        else if (collision != null && collision is IInteractable interactable)
         {
             interactable.Interact(_player);
             EndPlayerTurn();

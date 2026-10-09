@@ -28,7 +28,7 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     public IGridObjectMoving gridObjectMoving { get => _gridObjectMoving; }
 
     // Public methods
-    public bool TrySetObjectInNode(GameObject gameObject, Vector2Int nodeCoordinates)
+    public bool TrySetObjectInNode(IGridEntity gridEntity, Vector2Int nodeCoordinates)
     {
         Node node = _logicalGrid.GetGridNode(nodeCoordinates);
 
@@ -37,13 +37,13 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
             Debug.LogError("Node is missing");
             return false;
         }
-        if (!_logicalGrid.TrySetObjectInNode(node, gameObject))
+        if (!_logicalGrid.TrySetObjectInNode(node, gridEntity))
         {
             return false;
         }        
 
         Vector2 worldCoord = GridToWorldInteraction.GridToWorldPosition(this, new Vector2Int(node.X, node.Y));
-        gameObject.transform.position = new Vector3(worldCoord.x, worldCoord.y, gameObject.transform.position.z);
+        gridEntity.GameObject.transform.position = new Vector3(worldCoord.x, worldCoord.y, gridEntity.GameObject.transform.position.z);
     
         return true;
     }
@@ -69,7 +69,7 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
         return result;
     }
 
-    public GameObject GetObjectInNode(Vector2Int nodeCoordinates)
+    public IGridEntity GetObjectInNode(Vector2Int nodeCoordinates)
     {
         Node node = _logicalGrid.GetGridNode(nodeCoordinates);
 
@@ -77,9 +77,9 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
         return node.Object;
     }    
 
-    public Vector2Int GetCoordinates(GameObject go)
+    public Vector2Int GetCoordinates(IGridEntity gridEntity)
     {
-        return _logicalGrid.GetObjectCoordinates(go);
+        return _logicalGrid.GetObjectCoordinates(gridEntity);
     }
 
     // Private Methods

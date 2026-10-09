@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Weed : MonoBehaviour, IInteractable
+public class Weed : MonoBehaviour, IInteractable, IGridEntity
 {
     [SerializeField] private int _maxHitPoints;
     [SerializeField] private int _breakPoint; // Hit points amount when need to change sprite
@@ -15,6 +15,8 @@ public class Weed : MonoBehaviour, IInteractable
 
     public int MaxHitPoints { get => _maxHitPoints; }
     public int CurrentHitPoints { get => _currentHitPoints; }
+
+    public GameObject GameObject { get => gameObject; }
 
     public void Interact(Player player)
     {

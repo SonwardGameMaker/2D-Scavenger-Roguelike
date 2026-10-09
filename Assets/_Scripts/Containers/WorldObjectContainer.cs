@@ -6,7 +6,7 @@ public class WorldObjectContainer : MonoBehaviour
     [SerializeField] private Food _foodPrefab;
 
     // Public methods
-    public GameObject SpawnObject(WorldObjectType objectType)
+    public IGridEntity SpawnObject(WorldObjectType objectType)
     {
         GameObject worldObject = null;
 
@@ -25,6 +25,6 @@ public class WorldObjectContainer : MonoBehaviour
         }
 
 
-        return Instantiate(worldObject, transform);
+        return Instantiate(worldObject, transform).GetComponent<IGridEntity>();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Player : Character, IDamagable
+public class Player : MonoBehaviour, IGridEntity, IDamagable
 {
     [SerializeField] private int _startingFood;
 
@@ -21,6 +21,8 @@ public class Player : Character, IDamagable
             // invoke UI change event
         }
     }
+
+    public GameObject GameObject { get => gameObject; }
 
     public void LooseFood(int amount)
     {

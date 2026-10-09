@@ -28,7 +28,7 @@ public class CharacterManager : MonoBehaviour
     // Private methods
     private void SetPlayerIntoGrid(IGridNodeInteractions gridInteractor)
     {
-        gridInteractor.TrySetObjectInNode(_player.gameObject, _playerStartPosition);
+        gridInteractor.TrySetObjectInNode(_player, _playerStartPosition);
     }
 
     private void SpawnEnemy(IGridNodeInteractions gridInteractor)
@@ -42,6 +42,6 @@ public class CharacterManager : MonoBehaviour
 
         Enemy enemy = _characterContainer.SpawnEnemy();
 
-        gridInteractor.TrySetObjectInNode(enemy.gameObject, coordinates);
+        gridInteractor.TrySetObjectInNode(enemy, coordinates);
     }
 }

@@ -26,7 +26,7 @@ public class WorldObjectsManager : MonoBehaviour
     // Private methods
     private void SetExitIntoGrid(IGridNodeInteractions gridInteractor)
     {
-        gridInteractor.TrySetObjectInNode(_exit.gameObject, _exitPosition);
+        gridInteractor.TrySetObjectInNode(_exit, _exitPosition);
     }
 
     private void SpawnWorldObject(WorldObjectType objectType, IGridNodeInteractions gridInteractor)
@@ -38,7 +38,7 @@ public class WorldObjectsManager : MonoBehaviour
             return;
         }
 
-        GameObject worldObject = _worldObjectContainer.SpawnObject(objectType);
+        IGridEntity worldObject = _worldObjectContainer.SpawnObject(objectType);
 
         gridInteractor.TrySetObjectInNode(worldObject, coordinates);
     }

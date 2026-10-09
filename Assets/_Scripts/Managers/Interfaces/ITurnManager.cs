@@ -1,4 +1,4 @@
 ﻿public interface ITurnManager
 {
-    public void CurrentCharacterEndedTurn(Character currnet);
+    public void CurrentCharacterEndedTurn(IGridEntity currnet);
 }

@@ -1,8 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Node
 {
-    private GameObject _gameObject;
+    private IGridEntity _gameObject;
     private bool _isEmpty = true;
 
     public Node(int x, int y)
@@ -13,7 +13,7 @@ public class Node
     public int X { get; set; }
     public int Y { get; set; }
     public bool IsEmpty { get { return _isEmpty; } }
-    public GameObject Object 
+    public IGridEntity Object 
     {
         get { return _gameObject; }
         set

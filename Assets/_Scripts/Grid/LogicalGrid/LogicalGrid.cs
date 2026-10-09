@@ -9,7 +9,7 @@ public class LogicalGrid : MonoBehaviour
 
     private Node[,] _grid;
 
-    private Dictionary<GameObject, Vector2Int> _nodeObjectsCoordinates;
+    private Dictionary<IGridEntity, Vector2Int> _nodeObjectsCoordinates;
     
     public void Init(IGridInfo gridInfo)
     {
@@ -27,7 +27,7 @@ public class LogicalGrid : MonoBehaviour
             }
         }
 
-        _nodeObjectsCoordinates = new Dictionary<GameObject, Vector2Int>();
+        _nodeObjectsCoordinates = new Dictionary<IGridEntity, Vector2Int>();
     }
 
     // Public Methods
@@ -68,7 +68,7 @@ public class LogicalGrid : MonoBehaviour
         return node != null;
     }
 
-    public bool TrySetObjectInNode(Node node, GameObject go)
+    public bool TrySetObjectInNode(Node node, IGridEntity gridEntity)
     {
         if (!node.IsEmpty)
         {
@@ -76,32 +76,32 @@ public class LogicalGrid : MonoBehaviour
             return false;
         }
 
-        node.Object = go;
+        node.Object = gridEntity;
         Vector2Int coordinates = new Vector2Int(node.X, node.Y);
 
-        if (_nodeObjectsCoordinates.ContainsKey(go)) // це думаю може потім винесу в окремий метод AddObject який вже буде забороняти вставлення дублікатів а не просто ігнорувати
+        if (_nodeObjectsCoordinates.ContainsKey(gridEntity)) // це думаю може потім винесу в окремий метод AddObject який вже буде забороняти вставлення дублікатів а не просто ігнорувати
         { 
-            _nodeObjectsCoordinates[go] = coordinates;
+            _nodeObjectsCoordinates[gridEntity] = coordinates;
         }
         else 
         {
-            _nodeObjectsCoordinates.Add(go, coordinates);
+            _nodeObjectsCoordinates.Add(gridEntity, coordinates);
         }
 
         return true;
     }
 
-    public Vector2Int GetObjectCoordinates(GameObject go)
+    public Vector2Int GetObjectCoordinates(IGridEntity gridEntity)
     {
         Vector2Int coordinates;
-        _nodeObjectsCoordinates.TryGetValue(go, out coordinates);
+        _nodeObjectsCoordinates.TryGetValue(gridEntity, out coordinates);
 
         return coordinates;
     }
 
-    public void RemoveObjectFromGrid(GameObject go)
+    public void RemoveObjectFromGrid(IGridEntity gridEntity)
     {
-        _nodeObjectsCoordinates.Remove(go);
+        _nodeObjectsCoordinates.Remove(gridEntity);
     }
 
     // Private Methods

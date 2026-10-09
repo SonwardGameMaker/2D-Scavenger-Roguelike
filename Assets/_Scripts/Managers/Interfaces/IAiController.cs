@@ -2,5 +2,5 @@
 
 public interface IAiController
 {
-    public void CharactersTurn(Character character);
+    public void CharactersTurn(IGridEntity character);
 }

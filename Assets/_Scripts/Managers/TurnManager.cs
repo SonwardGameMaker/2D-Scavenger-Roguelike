@@ -12,8 +12,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
     private Player _player;
     private List<Enemy> _enemies;
 
-    private List<Character> _turnOrder;
-    private Character _currnet;
+    private List<IGridEntity> _turnOrder;
+    private IGridEntity _currnet;
     private int _currentIndex;
 
     // Init
@@ -25,7 +25,7 @@ public class TurnManager : MonoBehaviour, ITurnManager
         _player = characterContainer.Player;
         _enemies = characterContainer.Enemies;
 
-        _turnOrder = new List<Character>();
+        _turnOrder = new List<IGridEntity>();
     }
 
     public void InitTurnOrder()
@@ -52,11 +52,11 @@ public class TurnManager : MonoBehaviour, ITurnManager
     }
 
     // Public Methods
-    public void CurrentCharacterEndedTurn(Character currnet)
+    public void CurrentCharacterEndedTurn(IGridEntity currnet)
     {
         if (currnet != _currnet)
         {
-            Debug.LogError($"Ended turn out of order: {_currnet.gameObject.name}");
+            Debug.LogError($"Ended turn out of order: {_currnet}");
             return;
         }
 

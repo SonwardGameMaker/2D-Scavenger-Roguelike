@@ -2,20 +2,18 @@
 
 public class BotAiManager : MonoBehaviour, IAiController
 {
-    private IGridInfo _gridInfo;
     private IGridObjectMoving _characterMoving;
     private ITurnManager _turnManager;
 
     private Enemy _current;
 
-    public void Init(ITurnManager turnManager, IGridObjectMoving characterMoving, IGridInfo gridInfo)
+    public void Init(ITurnManager turnManager, IGridObjectMoving characterMoving)
     {
         _characterMoving = characterMoving;
-        _gridInfo = gridInfo;
         _turnManager = turnManager;
     }
 
-    public void CharactersTurn(Character character)
+    public void CharactersTurn(IGridEntity character)
     {
         _current = character as Enemy;
 
@@ -39,12 +37,12 @@ public class BotAiManager : MonoBehaviour, IAiController
 
         foreach (Vector2Int direction in directions)
         {
-            if (_characterMoving.TryMoveGridObject(direction, _current.gameObject, out GameObject collision))
+            if (_characterMoving.TryMoveGridObject(direction, _current, out IGridEntity collision))
             {
                 return true;
             }
 
-            if (collision != null && collision.TryGetComponent(out Player player))
+            if (collision != null && collision is Player)
             {
                 // TODO: Attack the player
                 return true;
