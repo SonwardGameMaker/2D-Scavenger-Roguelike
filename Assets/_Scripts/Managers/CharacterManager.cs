@@ -9,6 +9,7 @@ public class CharacterManager : MonoBehaviour
 
     public void Init(IGridNodeInteractions gridInteractor)
     {
+        _player.Init();
         SetPlayerIntoGrid(gridInteractor);
     }
 

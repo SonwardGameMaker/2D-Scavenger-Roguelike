@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Food : MonoBehaviour, IInteractable
 {
@@ -6,6 +6,8 @@ public class Food : MonoBehaviour, IInteractable
     
     public void Interact(Player player)
     {
+        player.ConsumeFood(_value);
 
+        // invoke event to remove this object from scene
     }
 }
