@@ -1,16 +1,28 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Weed : MonoBehaviour
+public class Weed : MonoBehaviour, IInteractable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private int _maxHitPoints;
+    [SerializeField] private int _breakPoint; // Hit points amount when need to change sprite
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+
+    private int _currentHitPoints;
+
+    public void Init() // треба буде подумати як отут викликати Ініт
+    {
+        _currentHitPoints = _maxHitPoints;
+    }
+
+    public int MaxHitPoints { get => _maxHitPoints; }
+    public int CurrentHitPoints { get => _currentHitPoints; }
+
+    public void Interact(Player player)
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void TakeDamage()
     {
-        
+        _currentHitPoints -= 1;
     }
 }
