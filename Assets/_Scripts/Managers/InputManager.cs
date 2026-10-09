@@ -5,12 +5,12 @@ public class InputManager : MonoBehaviour, IPlayerController
 {
     private BaseMovement _inputActions;
 
-    private ICharacterMoving _characterMoving;
+    private IGridObjectMoving _characterMoving;
 
     private Player _player;
     [SerializeField] private PlayerController _playerController;
 
-    public void Init(ITurnManager turnManager, ICharacterMoving characterMoving, ICharacterContainer characterContainer)
+    public void Init(ITurnManager turnManager, IGridObjectMoving characterMoving, ICharacterContainer characterContainer)
     {
         _player = characterContainer.Player;
 

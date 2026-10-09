@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnManager : MonoBehaviour, ITurnManager, ICharacterMoving
+public class TurnManager : MonoBehaviour, ITurnManager
 {
     private IGridNodeInteractions _gridInteractions;
     private IPlayerController _playerController;
     private IAiController _aiController;
+
+    private IGridObjectMoving _characterMoving; // сюди зробити норм клас який буде то обобляти. І можливо винесу його в GridManager
 
     private Player _player;
     private List<Enemy> _enemies;
@@ -50,22 +52,6 @@ public class TurnManager : MonoBehaviour, ITurnManager, ICharacterMoving
     }
 
     // Public Methods
-    public bool TryMoveCharacter(Vector2Int direction, Character character)
-    {
-        GameObject go = character.gameObject;
-        Vector2Int oldPosition = _gridInteractions.GetCoordinates(go);
-        Vector2Int newPosition = oldPosition + direction;
-
-        if (_gridInteractions.TrySetObjectInNode(go, newPosition))
-        {
-            _gridInteractions.RemoveObjectFromNode(oldPosition);
-
-            return true;
-        }
-
-        return false;
-    }
-
     public void CurrentCharacterEndedTurn(Character currnet)
     {
         if (currnet != _currnet)
@@ -80,6 +66,7 @@ public class TurnManager : MonoBehaviour, ITurnManager, ICharacterMoving
         CurrentStartTurn();
     }
 
+    // Private Methods
     private void CurrentStartTurn()
     {
         if (_currnet is Player)

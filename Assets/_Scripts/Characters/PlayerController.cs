@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private Player _player;
-    private ICharacterMoving _characterMoving;
+    private IGridObjectMoving _characterMoving;
     private ITurnManager _turnManager;
 
     private Vector2Int _direction;
 
-    public void Init(ITurnManager turnManager, Player player, ICharacterMoving characterMoving)
+    public void Init(ITurnManager turnManager, Player player, IGridObjectMoving characterMoving)
     {
         _player = player;
         _characterMoving = characterMoving;
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
         Vector2 moveInput = context.ReadValue<Vector2>();
         _direction = new Vector2Int((int)moveInput.x, (int)moveInput.y);
         
-        if(_characterMoving.TryMoveCharacter(_direction, _player))
+        if(_characterMoving.TryMoveGridObject(_direction, _player.gameObject))
         {
             _turnManager.CurrentCharacterEndedTurn(_player);
         }

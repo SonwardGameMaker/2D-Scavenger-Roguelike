@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
 {
@@ -9,17 +9,23 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     [SerializeField] private LogicalGrid _logicalGrid;
     [SerializeField] private VisualGrid _visualGrid;
 
+    private IGridObjectMoving _gridObjectMoving;
+
     public void Init()
     {
         _logicalGrid.Init(this);
         _visualGrid.Init(this);
+
+        _gridObjectMoving = new ObjectMover(this);
     }
 
-    public int Width { get { return _width; } }
-    public int Height { get { return _height; } }
-    public float TileSize { get { return _tileSize; } }
+    public int Width { get => _width; }
+    public int Height { get => _height; }
+    public float TileSize { get => _tileSize; }
 
-    public Vector3 GridPosition { get { return transform.position; } }
+    public Vector3 GridPosition { get => transform.position; }
+
+    public IGridObjectMoving gridObjectMoving { get => _gridObjectMoving; }
 
     // Public methods
     public bool TrySetObjectInNode(GameObject gameObject, Vector2Int nodeCoordinates)

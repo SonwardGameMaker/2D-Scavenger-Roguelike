@@ -3,12 +3,12 @@
 public class BotAiManager : MonoBehaviour, IAiController
 {
     private IGridInfo _gridInfo;
-    private ICharacterMoving _characterMoving;
+    private IGridObjectMoving _characterMoving;
     private ITurnManager _turnManager;
 
     private Enemy _current;
 
-    public void Init(ITurnManager turnManager, ICharacterMoving characterMoving, IGridInfo gridInfo)
+    public void Init(ITurnManager turnManager, IGridObjectMoving characterMoving, IGridInfo gridInfo)
     {
         _characterMoving = characterMoving;
         _gridInfo = gridInfo;
@@ -39,7 +39,7 @@ public class BotAiManager : MonoBehaviour, IAiController
 
         foreach (Vector2Int direction in directions)
         {
-            if (_characterMoving.TryMoveCharacter(direction, _current))
+            if (_characterMoving.TryMoveGridObject(direction, _current.gameObject))
             {
                 return true;
             }
