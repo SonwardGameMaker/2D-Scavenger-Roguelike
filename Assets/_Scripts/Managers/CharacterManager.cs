@@ -7,21 +7,25 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private Vector2Int _playerStartPosition;
     [SerializeField] private CharacterContainer _characterContainer;
 
+    IGridNodeInteractions _gridNodeInteractions;
+
     public void Init(IGridNodeInteractions gridInteractor)
     {
+        _gridNodeInteractions = gridInteractor;
+
         _player.Init();
-        SetPlayerIntoGrid(gridInteractor);
+        SetPlayerIntoGrid(_gridNodeInteractions);
     }
 
     public Player Player { get => _player;  }
     public ICharacterContainer CharacterContainer { get => _characterContainer;  }
 
     // Public methods
-    public void SpawnEnemies(int enemyCount, IGridNodeInteractions gridInteractor)
+    public void SpawnEnemies(int enemyCount)
     {
         for (int i = 0; i < enemyCount; i++)
         {
-            SpawnEnemy(gridInteractor);
+            SpawnEnemy(_gridNodeInteractions);
         }
     }
 

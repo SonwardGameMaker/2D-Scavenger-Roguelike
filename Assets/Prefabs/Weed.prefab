@@ -105,3 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2898eb2ab690101468218801ab636e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weed
+  _healthySprite: {fileID: -458074323, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  _damagedSprite: {fileID: 1238187684, guid: a538e04c16c05db46b4f3d36fe333ff6, type: 3}
+  _maxHitPoints: 3
+  _breakPoint: 2
+  _spriteRenderer: {fileID: 7592338245823373435}

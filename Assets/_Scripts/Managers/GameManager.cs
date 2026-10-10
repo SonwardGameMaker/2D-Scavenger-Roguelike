@@ -30,9 +30,9 @@ public class GameManager : MonoBehaviour
         _turnManager.RegisterEnemyController(_botAiManager);
 
         // Spawn
-        _characterManager.SpawnEnemies(2, _gridManager);
-        _worldObjectsManager.SpawnWorldObjects(WorldObjectType.Weed, 3, _gridManager);
-        _worldObjectsManager.SpawnWorldObjects(WorldObjectType.Food, 1, _gridManager);
+        _characterManager.SpawnEnemies(2);
+        _worldObjectsManager.SpawnWorldObjects(WorldObjectType.Weed, 3);
+        _worldObjectsManager.SpawnWorldObjects(WorldObjectType.Food, 1);
 
         // Init Turn Order
         _turnManager.InitTurnOrder();

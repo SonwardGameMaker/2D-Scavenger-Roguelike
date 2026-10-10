@@ -61,6 +61,13 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
         node.Object = null;
     }
 
+    public void RemoveObjectFromGrid(IGridEntity gridEntity)
+    {
+        RemoveObjectFromNode(_logicalGrid.GetObjectCoordinates(gridEntity));
+
+        _logicalGrid.RemoveObjectFromGrid(gridEntity);
+    }
+
     public bool TryGetRandomEmptyNodeCoordinates(out Vector2Int coordinates)
     {
         Node node = null;

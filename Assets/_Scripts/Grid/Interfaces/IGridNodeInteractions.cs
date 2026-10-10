@@ -6,6 +6,8 @@ public interface IGridNodeInteractions
 
     public void RemoveObjectFromNode(Vector2Int nodeCoordinates);
 
+    public void RemoveObjectFromGrid(IGridEntity gridEntity);
+
     public bool TryGetRandomEmptyNodeCoordinates(out Vector2Int coordinaes);
 
     public IGridEntity GetObjectInNode(Vector2Int nodeCoordinaets);

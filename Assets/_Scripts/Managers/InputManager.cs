@@ -42,7 +42,10 @@ public class InputManager : MonoBehaviour, IPlayerController
         }
         else if (collision != null && collision is IInteractable interactable)
         {
-            interactable.Interact(_player);
+            if (interactable.Interact(_player).GoIntoNode)
+            {
+                _characterMoving.TryMoveGridObject(_direction, _player, out _);
+            }
             EndPlayerTurn();
         }
     }
