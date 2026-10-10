@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour, ITurnManager
 {
-    private IGridNodeInteractions _gridInteractions;
     private IPlayerController _playerController;
     private IAiController _aiController;
-
-    private IGridObjectMoving _characterMoving; // сюди зробити норм клас який буде то обобляти. І можливо винесу його в GridManager
 
     private Player _player;
     private List<Enemy> _enemies;
@@ -17,11 +15,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
     private int _currentIndex;
 
     // Init
-    public void Init(IGridNodeInteractions gridNodeInteractions, ICharacterContainer characterContainer)
+    public void Init(ICharacterContainer characterContainer)
     {
-        _gridInteractions = gridNodeInteractions;
-
-
         _player = characterContainer.Player;
         _enemies = characterContainer.Enemies;
 
@@ -38,7 +33,11 @@ public class TurnManager : MonoBehaviour, ITurnManager
         _currentIndex = 0;
         _currnet = _turnOrder[_currentIndex];
 
-        CurrentStartTurn();
+    }
+
+    public void StartGame()
+    {
+        StartCoroutine(TurnLoop());
     }
 
     public void RegisterPlayerController(IPlayerController playerController)
@@ -52,7 +51,7 @@ public class TurnManager : MonoBehaviour, ITurnManager
     }
 
     // Public Methods
-    public void CurrentCharacterEndedTurn(IGridEntity currnet)
+    private void CurrentCharacterEndedTurn(IGridEntity currnet)
     {
         if (currnet != _currnet)
         {
@@ -76,6 +75,23 @@ public class TurnManager : MonoBehaviour, ITurnManager
         else
         {
             _aiController.CharactersTurn(_currnet);
+        }
+    }
+
+    // Coroutines
+    private IEnumerator TurnLoop()
+    {
+        while (true)
+        {
+            for (int i = 0; i < _turnOrder.Count; i++)
+            {
+                IGridEntity current = _turnOrder[i];
+
+                if (current is Player)
+                    yield return StartCoroutine(_playerController.PlayersTurn());
+                else
+                    yield return StartCoroutine(_aiController.CharactersTurn(current));
+            }
         }
     }
 }

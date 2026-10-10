@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 
@@ -8,7 +9,6 @@ public class InputManager : MonoBehaviour, IPlayerController
     private IGridObjectMoving _characterMoving;
     private ITurnManager _turnManager;
 
-    private Vector2Int _direction;
     private bool _playersTurn;
 
     public void Init(ITurnManager turnManager, IGridObjectMoving characterMoving, ICharacterContainer characterContainer)
@@ -18,14 +18,15 @@ public class InputManager : MonoBehaviour, IPlayerController
         _characterMoving = characterMoving;
 
         _turnManager = turnManager;
-        _direction = new Vector2Int();
         _playersTurn = false;
     }
 
-    public void PlayersTurn()
+    public IEnumerator PlayersTurn()
     {
         _playersTurn = true;
-        Debug.Log("Player's turn!");
+        // Debug.Log("Player's turn!");
+
+        yield return new WaitUntil(() => !_playersTurn);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -34,9 +35,14 @@ public class InputManager : MonoBehaviour, IPlayerController
         if (!context.performed) { return; }
 
         Vector2 moveInput = context.ReadValue<Vector2>();
-        _direction = new Vector2Int((int)moveInput.x, (int)moveInput.y);
+        Vector2Int direction = new Vector2Int((int)moveInput.x, (int)moveInput.y);
 
-        if (_characterMoving.TryMoveGridObject(_direction, _player, out IGridEntity collision))
+        if (direction == Vector2Int.zero)
+        {
+            return;
+        }
+
+        if (_characterMoving.TryMoveGridObject(direction, _player, out IGridEntity collision))
         {
             EndPlayerTurn();
         }
@@ -44,8 +50,10 @@ public class InputManager : MonoBehaviour, IPlayerController
         {
             if (interactable.Interact(_player).GoIntoNode)
             {
-                _characterMoving.TryMoveGridObject(_direction, _player, out _);
+                _characterMoving.TryMoveGridObject(direction, _player, out _);
             }
+
+
             EndPlayerTurn();
         }
     }
@@ -53,6 +61,6 @@ public class InputManager : MonoBehaviour, IPlayerController
     private void EndPlayerTurn()
     {
         _playersTurn = false;
-        _turnManager.CurrentCharacterEndedTurn(_player);
+        // _turnManager.CurrentCharacterEndedTurn(_player);
     }
 }

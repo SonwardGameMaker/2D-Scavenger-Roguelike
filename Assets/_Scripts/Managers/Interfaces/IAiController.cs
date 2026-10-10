@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 
 public interface IAiController
 {
-    public void CharactersTurn(IGridEntity character);
+    public IEnumerator CharactersTurn(IGridEntity character);
 }

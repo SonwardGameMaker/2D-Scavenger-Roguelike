@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class BotAiManager : MonoBehaviour, IAiController
 {
@@ -13,15 +14,16 @@ public class BotAiManager : MonoBehaviour, IAiController
         _turnManager = turnManager;
     }
 
-    public void CharactersTurn(IGridEntity character)
+    public IEnumerator CharactersTurn(IGridEntity character)
     {
         _current = character as Enemy;
 
-        Debug.Log($"{_current.gameObject.name}'s turn!");
+        // Debug.Log($"{_current.gameObject.name}'s turn!");
 
         TryMoveInRandomDirection();
-        _turnManager.CurrentCharacterEndedTurn(_current);
+        // _turnManager.CurrentCharacterEndedTurn(_current);
 
+        yield return null;
     }
 
     private bool TryMoveInRandomDirection()

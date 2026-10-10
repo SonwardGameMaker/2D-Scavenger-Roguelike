@@ -35,7 +35,7 @@ public class LogicalGrid : MonoBehaviour
     {
         if (!ValidateGridPosition(coordinates))
         {
-            Debug.LogError("OutOfGrid");
+            // Debug.LogError("OutOfGrid");
             return null;
         }
 
@@ -72,7 +72,7 @@ public class LogicalGrid : MonoBehaviour
     {
         if (!node.IsEmpty)
         {
-            Debug.Log("Node already occupied");
+            // Debug.Log("Node already occupied");
             return false;
         }
 

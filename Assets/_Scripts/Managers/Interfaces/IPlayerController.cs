@@ -1,4 +1,6 @@
-﻿public interface IPlayerController
+﻿using System.Collections;
+
+public interface IPlayerController
 {
-    public void PlayersTurn();
+    public IEnumerator PlayersTurn();
 }

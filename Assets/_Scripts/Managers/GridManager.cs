@@ -34,7 +34,7 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
 
         if (node == null)
         {
-            Debug.LogError("Node is missing");
+            // Debug.LogError("Node is missing");
             return false;
         }
         if (!_logicalGrid.TrySetObjectInNode(node, gridEntity))

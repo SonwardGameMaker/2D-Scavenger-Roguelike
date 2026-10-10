@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         _characterManager.Init(_gridManager);
         _worldObjectsManager.Init(_gridManager);
 
-        _turnManager.Init(_gridManager, _characterManager.CharacterContainer);
+        _turnManager.Init(_characterManager.CharacterContainer);
 
         _inputManager.Init(_turnManager, _gridManager.gridObjectMoving, _characterManager.CharacterContainer);
         _botAiManager.Init(_turnManager, _gridManager.gridObjectMoving);
@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
 
         // Init Turn Order
         _turnManager.InitTurnOrder();
+
+        // Start
+        _turnManager.StartGame();
     }
 
 }
