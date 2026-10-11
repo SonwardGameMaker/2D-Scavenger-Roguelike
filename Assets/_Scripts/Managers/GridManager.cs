@@ -70,10 +70,14 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
 
     public bool TryGetRandomEmptyNodeCoordinates(out Vector2Int coordinates)
     {
-        Node node = null;
-        bool result = TryGetRandomEmptyNode(out node);
-        coordinates = new Vector2Int(node.X, node.Y);
-        return result;
+        coordinates = default;
+        if(TryGetRandomEmptyNode(out Node node))
+        {
+            coordinates = new Vector2Int(node.X, node.Y);
+            return true;
+        }
+        
+        return false;
     }
 
     public IGridEntity GetObjectInNode(Vector2Int nodeCoordinates)
