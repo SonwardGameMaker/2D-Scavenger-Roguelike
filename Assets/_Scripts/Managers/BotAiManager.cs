@@ -3,27 +3,24 @@ using UnityEngine;
 
 public class BotAiManager : MonoBehaviour, IAiController
 {
+    [SerializeField] private float _turnDelay;
+
     private IGridObjectMoving _characterMoving;
-    private ITurnManager _turnManager;
 
     private Enemy _current;
 
-    public void Init(ITurnManager turnManager, IGridObjectMoving characterMoving)
+    public void Init(IGridObjectMoving characterMoving)
     {
         _characterMoving = characterMoving;
-        _turnManager = turnManager;
     }
 
     public IEnumerator CharactersTurn(IGridEntity character)
     {
         _current = character as Enemy;
 
-        // Debug.Log($"{_current.gameObject.name}'s turn!");
-
         TryMoveInRandomDirection();
-        // _turnManager.CurrentCharacterEndedTurn(_current);
 
-        yield return null;
+        yield return new WaitForSeconds(_turnDelay);
     }
 
     private bool TryMoveInRandomDirection()
