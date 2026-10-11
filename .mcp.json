@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "unity": {
+      "command": "C:\\Users\\Roman\\AppData\\Local\\Unity\\bin\\unity.exe",
+      "args": [
+        "mcp",
+        "--project-path",
+        "E:\\MyFiles\\UnityStuding\\GitHub\\LittleProjects\\2D Scavenger Roguelike"
+      ]
+    }
+  }
+}

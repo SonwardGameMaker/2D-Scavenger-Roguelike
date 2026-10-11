@@ -1,10 +1,16 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface IGridNodeInteractions
 {
-    public bool TrySetObjectInNode(GameObject gameObject, Vector2Int nodeCoord);
+    public bool TrySetObjectInNode(IGridEntity gridEntity, Vector2Int nodeCoord);
 
-    public GameObject GetObjectInNode(Vector2Int nodeCoordinaets);
+    public void RemoveObjectFromNode(Vector2Int nodeCoordinates);
+
+    public void RemoveObjectFromGrid(IGridEntity gridEntity);
 
     public bool TryGetRandomEmptyNodeCoordinates(out Vector2Int coordinaes);
+
+    public IGridEntity GetObjectInNode(Vector2Int nodeCoordinaets);
+
+    public Vector2Int GetCoordinates(IGridEntity gridEntity);
 }

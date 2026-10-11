@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class WorldObjectsManager : MonoBehaviour
 {
@@ -7,26 +7,32 @@ public class WorldObjectsManager : MonoBehaviour
 
     [SerializeField] WorldObjectContainer _worldObjectContainer;
 
+    IGridNodeInteractions _gridNodeInteractions;
+
     public void Init(IGridNodeInteractions gridInteractor)
     {
-        SetExitIntoGrid(gridInteractor);
+        _gridNodeInteractions = gridInteractor;
+
+        SetExitIntoGrid(_gridNodeInteractions);
+
+        _exit.OnRemove += RemoveWorldObject;
     }
 
     public Exit Exit { get { return _exit; } }
 
     // Public methods
-    public void SpawnWorldObjects(WorldObjectType objectType, int objectCount, IGridNodeInteractions gridInteractor) // отут може потім як транзакцію зроблю
+    public void SpawnWorldObjects(WorldObjectType objectType, int objectCount) // РѕС‚СѓС‚ РјРѕР¶Рµ РїРѕС‚С–Рј СЏРє С‚СЂР°РЅР·Р°РєС†С–СЋ Р·СЂРѕР±Р»СЋ
     {
         for (int i = 0; i < objectCount; i++)
         {
-            SpawnWorldObject(objectType, gridInteractor);
+            SpawnWorldObject(objectType, _gridNodeInteractions);
         }
     }
 
     // Private methods
     private void SetExitIntoGrid(IGridNodeInteractions gridInteractor)
     {
-        gridInteractor.TrySetObjectInNode(_exit.gameObject, _exitPosition);
+        gridInteractor.TrySetObjectInNode(_exit, _exitPosition);
     }
 
     private void SpawnWorldObject(WorldObjectType objectType, IGridNodeInteractions gridInteractor)
@@ -38,8 +44,26 @@ public class WorldObjectsManager : MonoBehaviour
             return;
         }
 
-        GameObject worldObject = _worldObjectContainer.SpawnObject(objectType);
+        WorldObject worldObject = _worldObjectContainer.SpawnObject(objectType) as WorldObject;
+
+        worldObject.OnRemove += RemoveWorldObject;
 
         gridInteractor.TrySetObjectInNode(worldObject, coordinates);
+    }
+
+    private void RemoveWorldObject(WorldObject worldObject)
+    {
+        _gridNodeInteractions.RemoveObjectFromNode(_gridNodeInteractions.GetCoordinates(worldObject));
+
+        worldObject.OnRemove -= RemoveWorldObject;
+
+        if (worldObject is Exit)
+        {
+            return;
+        }
+
+        _gridNodeInteractions.RemoveObjectFromGrid(worldObject);
+
+        worldObject.gameObject.SetActive(false);
     }
 }

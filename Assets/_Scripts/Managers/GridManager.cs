@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
 {
@@ -9,40 +9,63 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
     [SerializeField] private LogicalGrid _logicalGrid;
     [SerializeField] private VisualGrid _visualGrid;
 
+    private IGridObjectMoving _gridObjectMoving;
+
     public void Init()
     {
         _logicalGrid.Init(this);
         _visualGrid.Init(this);
+
+        _gridObjectMoving = new ObjectMover(this);
     }
 
-    public int Width { get { return _width; } }
-    public int Height { get { return _height; } }
-    public float TileSize { get { return _tileSize; } }
+    public int Width { get => _width; }
+    public int Height { get => _height; }
+    public float TileSize { get => _tileSize; }
 
-    public Vector3 GridPosition { get { return transform.position; } }
+    public Vector3 GridPosition { get => transform.position; }
+
+    public IGridObjectMoving gridObjectMoving { get => _gridObjectMoving; }
 
     // Public methods
-    public bool TrySetObjectInNode(GameObject gameObject, Vector2Int nodeCoord)
+    public bool TrySetObjectInNode(IGridEntity gridEntity, Vector2Int nodeCoordinates)
     {
-        Node node = _logicalGrid.GetGridNode(nodeCoord);
+        Node node = _logicalGrid.GetGridNode(nodeCoordinates);
+
+        if (node == null)
+        {
+            // Debug.LogError("Node is missing");
+            return false;
+        }
+        if (!_logicalGrid.TrySetObjectInNode(node, gridEntity))
+        {
+            return false;
+        }        
+
+        Vector2 worldCoord = GridToWorldInteraction.GridToWorldPosition(this, new Vector2Int(node.X, node.Y));
+        gridEntity.GameObject.transform.position = new Vector3(worldCoord.x, worldCoord.y, gridEntity.GameObject.transform.position.z);
+    
+        return true;
+    }
+
+    public void RemoveObjectFromNode(Vector2Int nodeCoordinates)
+    {
+        Node node = _logicalGrid.GetGridNode(nodeCoordinates);
 
         if (node == null)
         {
             Debug.LogError("Node is missing");
-            return false;
-        }
-        if (!node.IsEmpty)
-        {
-            Debug.LogError("Node already occupied");
-            return false;
+            return;
         }
 
-        node.Object = gameObject;
+        node.Object = null;
+    }
 
-        Vector2 worldCoord = GridToWorldInteraction.GridToWorldPosition(this, new Vector2Int(node.X, node.Y));
-        gameObject.transform.position = new Vector3(worldCoord.x, worldCoord.y, gameObject.transform.position.z);
-    
-        return true;
+    public void RemoveObjectFromGrid(IGridEntity gridEntity)
+    {
+        RemoveObjectFromNode(_logicalGrid.GetObjectCoordinates(gridEntity));
+
+        _logicalGrid.RemoveObjectFromGrid(gridEntity);
     }
 
     public bool TryGetRandomEmptyNodeCoordinates(out Vector2Int coordinates)
@@ -53,12 +76,17 @@ public class GridManager : MonoBehaviour, IGridInfo, IGridNodeInteractions
         return result;
     }
 
-    public GameObject GetObjectInNode(Vector2Int nodeCoordinates)
+    public IGridEntity GetObjectInNode(Vector2Int nodeCoordinates)
     {
         Node node = _logicalGrid.GetGridNode(nodeCoordinates);
 
         if (node == null) return null;
         return node.Object;
+    }    
+
+    public Vector2Int GetCoordinates(IGridEntity gridEntity)
+    {
+        return _logicalGrid.GetObjectCoordinates(gridEntity);
     }
 
     // Private Methods

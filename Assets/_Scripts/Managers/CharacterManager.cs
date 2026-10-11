@@ -1,33 +1,38 @@
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
     [SerializeField] private Player _player;
-
     [SerializeField] private Vector2Int _playerStartPosition;
+    [SerializeField] private CharacterContainer _characterContainer;
 
-    [SerializeField] private EnemyContainer _enemyContainer;
+    IGridNodeInteractions _gridNodeInteractions;
 
     public void Init(IGridNodeInteractions gridInteractor)
     {
-        SetPlayerIntoGrid(gridInteractor);
+        _gridNodeInteractions = gridInteractor;
+
+        _player.Init();
+        SetPlayerIntoGrid(_gridNodeInteractions);
     }
 
-    public Player Player { get { return _player; } }
+    public Player Player { get => _player;  }
+    public ICharacterContainer CharacterContainer { get => _characterContainer;  }
 
     // Public methods
-    public void SpawnEnemies(int enemyCount, IGridNodeInteractions gridInteractor)
+    public void SpawnEnemies(int enemyCount)
     {
         for (int i = 0; i < enemyCount; i++)
         {
-            SpawnEnemy(gridInteractor);
+            SpawnEnemy(_gridNodeInteractions);
         }
     }
 
     // Private methods
     private void SetPlayerIntoGrid(IGridNodeInteractions gridInteractor)
     {
-        gridInteractor.TrySetObjectInNode(_player.gameObject, _playerStartPosition);
+        gridInteractor.TrySetObjectInNode(_player, _playerStartPosition);
     }
 
     private void SpawnEnemy(IGridNodeInteractions gridInteractor)
@@ -39,8 +44,8 @@ public class CharacterManager : MonoBehaviour
             return;
         }
 
-        Enemy enemy = _enemyContainer.SpawnEnemy();
+        Enemy enemy = _characterContainer.SpawnEnemy();
 
-        gridInteractor.TrySetObjectInNode(enemy.gameObject, coordinates);
+        gridInteractor.TrySetObjectInNode(enemy, coordinates);
     }
 }
