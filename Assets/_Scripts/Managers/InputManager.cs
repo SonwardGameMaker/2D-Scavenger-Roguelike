@@ -7,17 +7,15 @@ public class InputManager : MonoBehaviour, IPlayerController
 {
     private Player _player;
     private IGridObjectMoving _characterMoving;
-    private ITurnManager _turnManager;
 
     private bool _playersTurn;
 
-    public void Init(ITurnManager turnManager, IGridObjectMoving characterMoving, ICharacterContainer characterContainer)
+    public void Init(IGridObjectMoving characterMoving, ICharacterContainer characterContainer)
     {
         _player = characterContainer.Player;
 
         _characterMoving = characterMoving;
 
-        _turnManager = turnManager;
         _playersTurn = false;
     }
 

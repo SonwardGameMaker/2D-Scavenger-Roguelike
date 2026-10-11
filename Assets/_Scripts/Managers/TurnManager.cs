@@ -11,8 +11,6 @@ public class TurnManager : MonoBehaviour, ITurnManager
     private List<Enemy> _enemies;
 
     private List<IGridEntity> _turnOrder;
-    private IGridEntity _currnet;
-    private int _currentIndex;
 
     // Init
     public void Init(ICharacterContainer characterContainer)
@@ -30,14 +28,6 @@ public class TurnManager : MonoBehaviour, ITurnManager
         _turnOrder.Add(_player);
         _turnOrder.AddRange(_enemies);
 
-        _currentIndex = 0;
-        _currnet = _turnOrder[_currentIndex];
-
-    }
-
-    public void StartGame()
-    {
-        StartCoroutine(TurnLoop());
     }
 
     public void RegisterPlayerController(IPlayerController playerController)
@@ -51,31 +41,9 @@ public class TurnManager : MonoBehaviour, ITurnManager
     }
 
     // Public Methods
-    private void CurrentCharacterEndedTurn(IGridEntity currnet)
+    public void StartGame()
     {
-        if (currnet != _currnet)
-        {
-            Debug.LogError($"Ended turn out of order: {_currnet}");
-            return;
-        }
-
-        _currentIndex = (_currentIndex + 1) % _turnOrder.Count;
-        _currnet = _turnOrder[_currentIndex];
-
-        CurrentStartTurn();
-    }
-
-    // Private Methods
-    private void CurrentStartTurn()
-    {
-        if (_currnet is Player)
-        {
-            _playerController.PlayersTurn();
-        }
-        else
-        {
-            _aiController.CharactersTurn(_currnet);
-        }
+        StartCoroutine(TurnLoop());
     }
 
     // Coroutines
@@ -92,6 +60,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
                 else
                     yield return StartCoroutine(_aiController.CharactersTurn(current));
             }
+
+            yield return null;
         }
     }
 }

@@ -22,8 +22,8 @@ public class GameManager : MonoBehaviour
 
         _turnManager.Init(_characterManager.CharacterContainer);
 
-        _inputManager.Init(_turnManager, _gridManager.gridObjectMoving, _characterManager.CharacterContainer);
-        _botAiManager.Init(_turnManager, _gridManager.gridObjectMoving);
+        _inputManager.Init(_gridManager.gridObjectMoving, _characterManager.CharacterContainer);
+        _botAiManager.Init(_gridManager.gridObjectMoving);
 
         // Register
         _turnManager.RegisterPlayerController(_inputManager);
